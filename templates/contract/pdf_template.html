@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Shartnoma</title>
+    <style>
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 15px;
+        }
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>O'quv kursiga yozilish bo‘yicha shartnoma</h1>
+
+    <div class="section">
+        <p><span class="label">F.I.Sh:</span> {{ contract.full_name }}</p>
+        <p><span class="label">Yosh:</span> {{ contract.age }}</p>
+        <p><span class="label">Manzil:</span> {{ contract.address }}</p>
+        <p><span class="label">Kurs turi:</span> {{ contract.get_course_type_display }}</p>
+    </div>
+
+    {% if contract.document_type %}
+    <div class="section">
+        <p><span class="label">Hujjat turi:</span> {{ contract.get_document_type_display }}</p>
+        <p><span class="label">Seriya raqami:</span> {{ contract.document_series }}</p>
+        <p><span class="label">JSHSHIR:</span> {{ contract.jshshir }}</p>
+        <p><span class="label">Kim tomonidan berilgan:</span> {{ contract.document_given_by }}</p>
+        <p><span class="label">Berilgan sana:</span> {{ contract.document_given_date }}</p>
+    </div>
+    {% endif %}
+
+    {% if contract.age < 18 %}
+    <div class="section">
+        <h2>Ota-ona ma’lumotlari</h2>
+        <p><span class="label">Ota-ona F.I.Sh:</span> {{ contract.parent_full_name }}</p>
+        <p><span class="label">Hujjat seriyasi:</span> {{ contract.parent_document_series }}</p>
+        <p><span class="label">JSHSHIR:</span> {{ contract.parent_jshshir }}</p>
+        <p><span class="label">Kim tomonidan berilgan:</span> {{ contract.parent_document_given_by }}</p>
+        <p><span class="label">Berilgan sana:</span> {{ contract.parent_document_given_date }}</p>
+    </div>
+    {% endif %}
+
+    <div class="section">
+        <p><span class="label">1 oylik to‘lov narxi:</span> {{ contract.monthly_price }} so‘m</p>
+    </div>
+
+    <div class="section">
+        <p>
+            Mazkur shartnoma foydalanuvchi tomonidan ko‘rib chiqildi va shartlarga rozilik bildirildi.
+        </p>
+        <p>
+            Sana: {{ contract.created_at|date:"d-m-Y" }}
+        </p>
+    </div>
+
+    <div class="section">
+        <p>___________________ (Imzo)</p>
+    </div>
+</body>
+</html>

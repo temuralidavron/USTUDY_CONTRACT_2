@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Mening shartnomam{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Mening shartnomam</h2>
+
+    {% if contract %}
+        <p><strong>To‘liq ism:</strong> {{ contract.full_name }}</p>
+        <p><strong>Kurs:</strong> {{ contract.course_type }}</p>
+        <p><strong>Yaratilgan:</strong> {{ contract.created_at }}</p>
+        <hr>
+        <h5>Shartnomani o‘zgartirish:</h5>
+    {% else %}
+        <p>Siz hali shartnoma yaratmagansiz. Quyidagi forma orqali to‘ldiring:</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Saqlash</button>
+    </form>
+</div>
+{% endblock %}

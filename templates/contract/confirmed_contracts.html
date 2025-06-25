@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Qabul qilingan shartnomalar{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow rounded-4">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">✅ Qabul qilingan shartnomalar</h4>
+            <span class="badge bg-light text-success fs-6">Jami: {{ contracts|length }}</span>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-striped align-middle rounded-4">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>№</th>
+                            <th>Foydalanuvchi</th>
+                            <th>F.I.SH</th>
+                            <th>Kurs</th>
+                            <th>Yaratilgan sana</th>
+                            <th>To‘lov (1 oy)</th>
+                            <th>Fayllar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contract in contracts %}
+                        <tr class="text-center">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ contract.user.username }}</td>
+                            <td>{{ contract.full_name }}</td>
+                            <td>{{ contract.get_course_type_display }}</td>
+                            <td>{{ contract.created_at|date:"d-m-Y" }}</td>
+                            <td>{{ contract.monthly_price }} so‘m</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-primary me-2" href="{% url 'contract:download_contract_pdf' contract.id %}">
+                                    📄 PDF
+                                </a>
+                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'contract:download_contract_word' contract.id %}">
+                                    📝 Word
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">Hozircha qabul qilingan shartnomalar yo‘q.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'contract:unconfirmed_contracts' %}" class="btn btn-outline-dark">
+                    ⬅️ Yangi shartnomalarga qaytish
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

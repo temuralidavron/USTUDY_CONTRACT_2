@@ -1,0 +1,6 @@
+<h2>Shartnoma ma'lumotlarini to‘ldiring</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Saqlash va Tasdiqlash</button>
+</form>

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Ko‘rilmagan arizalar{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow rounded-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">📄 Ko‘rilmagan arizalar</h4>
+            <span class="badge bg-light text-primary fs-6">Jami: {{ contracts|length }}</span>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle table-bordered table-striped rounded-4">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>№</th>
+                            <th>Foydalanuvchi</th>
+                            <th>Kurs</th>
+                            <th>F.I.SH</th>
+                            <th>Yosh</th>
+                            <th>Yaratilgan sana</th>
+                            <th>Amal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contract in contracts %}
+                        <tr class="text-center">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ contract.user.username }}</td>
+                            <td>{{ contract.get_course_type_display }}</td>
+                            <td>{{ contract.full_name }}</td>
+                            <td>{{ contract.age }}</td>
+                            <td>{{ contract.created_at|date:"d-m-Y H:i" }}</td>
+                            <td>
+                                <a href="{% url 'contract:admin_preview_contract' contract.id %}" class="btn btn-sm btn-outline-primary">
+                                    Ko‘rish va Tasdiqlash
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">Ko‘rilmagan arizalar mavjud emas.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

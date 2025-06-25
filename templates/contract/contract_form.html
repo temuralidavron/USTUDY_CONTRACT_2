@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load form_tags %}
+
+{% block title %}Shartnoma to‘ldirish{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-lg rounded-4">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">📝 Shartnoma to‘ldirish</h4>
+    </div>
+    <div class="card-body">
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% for field in form %}
+{% if field.name in hidden_fields %}
+            <div class="mb-3 passport-metrka d-none" id="field-{{ field.name }}">
+              <label class="form-label fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field|add_class:"form-control" }}
+              {% if field.help_text %}
+                <div class="form-text text-muted">{{ field.help_text }}</div>
+              {% endif %}
+              {% for error in field.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+          {% elif field.name == "is_confirmed" %}
+            <div class="form-check mb-3">
+              {{ field|add_class:"form-check-input" }}
+              <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            </div>
+          {% else %}
+            <div class="mb-3">
+              <label class="form-label fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field|add_class:"form-control" }}
+              {% if field.help_text %}
+                <div class="form-text text-muted">{{ field.help_text }}</div>
+              {% endif %}
+              {% for error in field.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        <button type="submit" class="btn btn-success px-4">✅ Yuborish</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const docType = document.getElementById('id_document_type');
+    const fields = ['document_series', 'jshshir', 'document_given_by', 'document_given_date'];
+
+    function toggleFields() {
+      const type = docType.value;
+      fields.forEach(name => {
+        const el = document.getElementById(`field-${name}`);
+        if (!el) return;
+        if (type === 'passport' || type === 'metrka') {
+          el.classList.remove('d-none');
+        } else {
+          el.classList.add('d-none');
+        }
+      });
+    }
+
+    toggleFields();
+    docType.addEventListener('change', toggleFields);
+  });
+</script>
+{% endblock %}
