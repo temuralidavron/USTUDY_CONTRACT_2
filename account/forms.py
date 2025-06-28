@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from account.models import CustomUser
 
@@ -15,12 +16,20 @@ class CustomUserCreationForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
 
+    def clean_age(self):
+        age = self.cleaned_data.get("age")
+        if age is not None and age < 0:
+            raise ValidationError("Yosh manfiy bo'lishi mumkin emas.")
+        return age
+
     def clean_password2(self):
         password = self.cleaned_data.get('password')
         password2 = self.cleaned_data.get('password2')
         if password and password2 and password != password2:
             raise forms.ValidationError("Parollar mos emas!")
         return password2
+
+
 
 
 
