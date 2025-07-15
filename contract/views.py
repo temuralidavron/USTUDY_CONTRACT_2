@@ -184,7 +184,7 @@ def admin_finalize_contract(request, pk):
 # views.py
 @admin_required
 def confirmed_contracts(request):
-    contracts = Contract.objects.filter(saved=True)
+    contracts = Contract.objects.filter(saved=True).order_by("-created_at")
     return render(request, 'contract/confirmed_contracts.html', {"contracts": contracts})
 
 
