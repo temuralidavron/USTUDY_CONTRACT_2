@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="ustudy_contract@localhost" uuid="5d3c0eb1-e2f5-4e24-a1df-3633ae4c202e">
+    <data-source source="LOCAL" name="u_django@localhost" uuid="0b202b85-af30-428e-8a23-e8a360926e43">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/ustudy_contract</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/u_django</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

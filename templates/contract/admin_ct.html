@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Kontraktni yangilash</title>
+</head>
+<body>
+    <h2>Kontraktni yangilash</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Saqlash</button>
+    </form>
+
+</body>
+</html>

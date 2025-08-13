@@ -20,6 +20,7 @@
                             <th>Kurs</th>
                             <th>Yaratilgan sana</th>
                             <th>To‘lov (1 oy)</th>
+                            <th>O'zgartirish</th>
                             <th>Fayllar</th>
                         </tr>
                     </thead>
@@ -32,6 +33,8 @@
                             <td>{{ contract.get_course_type_display }}</td>
                             <td>{{ contract.created_at|date:"d-m-Y" }}</td>
                             <td>{{ contract.monthly_price }} so‘m</td>
+                            <td>                                <a class="btn btn-sm btn-outline-primary me-2" href="{% url 'contract:update_contract' contract.id %}">edit
+</td>
                             <td>
                                 <a class="btn btn-sm btn-outline-primary me-2" href="{% url 'contract:download_contract_pdf' contract.id %}">
                                     📄 PDF

@@ -19,6 +19,7 @@ class Contract(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     course_type = models.CharField(max_length=20, choices=CourseType.choices)
     full_name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=13)
     age = models.PositiveIntegerField()
     address = models.TextField()
 
@@ -38,9 +39,12 @@ class Contract(models.Model):
 
     is_confirmed = models.BooleanField(default=False)
     saved=models.BooleanField(default=False)
+    initial_price = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True)  # dastlabki narx
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    monthly_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2,blank=True, null=True)
+    contract_number = models.PositiveIntegerField(blank=True, null=True)
+    monthly_duration = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
 
     def __str__(self):

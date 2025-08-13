@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -21,6 +23,24 @@ class CustomUserCreationForm(forms.ModelForm):
         if age is not None and age < 0:
             raise ValidationError("Yosh manfiy bo'lishi mumkin emas.")
         return age
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get("phone", "").strip()
+
+        # Agar foydalanuvchi faqat raqam kiritgan bo‘lsa (masalan: 901234567), +998 qo‘shamiz
+        if re.fullmatch(r'\d{9}', phone):
+            phone = '+998' + phone
+
+        # +998 bilan boshlanishini tekshirish
+        if not phone.startswith("+998"):
+            raise ValidationError("Telefon raqam +998 bilan boshlanishi kerak.")
+
+        # +998 dan keyin 9 ta raqam bo‘lishi kerak
+        digits = phone[4:]
+        if not re.fullmatch(r'\d{9}', digits):
+            raise ValidationError("Telefon raqam +998 dan keyin faqat 9 ta raqam bo‘lishi kerak.")
+
+        return phone
 
     def clean_password2(self):
         password = self.cleaned_data.get('password')

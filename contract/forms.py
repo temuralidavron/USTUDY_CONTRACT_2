@@ -39,5 +39,48 @@ class AdminContractForm(forms.ModelForm):
     class Meta:
         model = Contract
         fields = [
-            'monthly_price'
+            'monthly_duration',
         ]
+
+
+class PriceDurationForm(forms.Form):
+    price = forms.IntegerField(
+        label="Har oylik narx (so'm)",
+        min_value=0,
+        required=True,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+
+    monthly_duration = forms.IntegerField(
+        label="Kurs muddati (oy)",
+        min_value=1,
+        required=True,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+
+class ContractAdminForm(forms.ModelForm):
+    class Meta:
+        model = Contract
+        fields = [
+
+            "is_confirmed",
+            "initial_price",
+            'price',
+            'contract_number',
+            "monthly_duration"
+        ]
+
+        labels = {
+            'price': "Har oylik narx (so'm)",
+            'monthly_duration': "Kurs muddati (oy)",
+        }
+        widgets = {
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'monthly_duration': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
+
+    def __init__(self, *args, **kwargs):
+        super(ContractAdminForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.required = True

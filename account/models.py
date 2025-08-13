@@ -7,3 +7,9 @@ class CustomUser(AbstractUser):
     phone = models.CharField(max_length=13)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True, null=True)

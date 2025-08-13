@@ -11,7 +11,22 @@
     {% for field in form %}
       <div class="mb-3">
         <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {{ field }}
+        {% if field.name == "phone" %}
+          <!-- Telefon inputiga +998 avtomatik va maxsus pattern -->
+          <input
+            type="text"
+            name="{{ field.name }}"
+            id="{{ field.id_for_label }}"
+            value="{{ field.value|default:'+998' }}"
+            maxlength="13"
+            pattern="\+998[0-9]{9}"
+            class="form-control"
+            required
+          >
+        {% else %}
+          {{ field }}
+        {% endif %}
+
         {% if field.help_text %}
           <div class="form-text">{{ field.help_text }}</div>
         {% endif %}
@@ -24,4 +39,27 @@
     <button type="submit" class="btn btn-primary">Ro‘yxatdan o‘tish</button>
   </form>
 </div>
+
+<!-- JS qismi -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const phoneInput = document.getElementById("id_phone");
+
+    // Har safar yozganda +998 saqlansin
+    phoneInput.addEventListener("input", function() {
+        if (!phoneInput.value.startsWith("+998")) {
+            phoneInput.value = "+998";
+        }
+    });
+
+    // Kursorni +998 oldidan qo‘ymaslik
+    phoneInput.addEventListener("keydown", function(e) {
+        const start = phoneInput.selectionStart;
+        if (start < 4 && e.key !== "ArrowLeft" && e.key !== "ArrowRight" && e.key !== "Tab") {
+            e.preventDefault();
+            phoneInput.setSelectionRange(4, 4);
+        }
+    });
+});
+</script>
 {% endblock %}

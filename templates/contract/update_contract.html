@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>«U-STUDY» o'quv markazida Yuridik shaxslarga TA'LIM XIZMATLARI KO’RSATISH TO'G'RISIDA № ________ Shartnoma</p>
+<p>   Toshkent shahri                       			        "{{ data.created_at|date:'d' }}" "{{ data.created_at|date:'m'  }}"  2025 yil</p>
+<p>"IT TA'LIM BERISH MARKAZI USTUDY" MChJ direktori Raxmatxo‘jayev A. A. (bundan keyin “IJROCHI” deb yuritiladi) bir tomondan va <strong>{{ data.full_name }}</strong> bundan keyin “O’QUVCHI” deb yuritiladi) ikkinchi tomondan, hamda _______________________________________________(bundan keyin “BUYURTMACHI” deb yuritiladi) boshqa tomonidan, keyinchalik birgalikda "Tomonlar" deb yuritiluvchilar o'rtasida imzolangan ushbu Shartnoma quyidagilar haqida tuzildi:</p>
+<p>1. SHARTNOMA PREDMETI</p>
+<p>1.1. Ijrochi Shartnoma shartlari va O'qitish to'g'risidagi Nizomga muvofiq, O’quvchiga uning tanlovi asosida bundan keyin matnda "Xizmatlar" deb yuritiluvchi Ro'yxatdan <strong>
+    {% if data.course_type == "backend" %}
+        "12" oylik, 144 akademik soatlik o'quv dasturi asosidagi Coursera platformasining "Microsoft Full-Stack Developer Professional Certificate"
+    {% elif data.course_type == "frontend" %}
+        "12" oylik, 144 akademik soatlik o'quv dasturi asosidagi Coursera platformasining "Specialization Web Design for Everyone: Web Development and Coding Fundamentals"
+    {% elif data.course_type == "data_science" %}
+        "12" oylik, 144 akademik soatlik o'quv dasturi asosidagi Coursera platformasining "Professional Machine Learning Engineer"
+    {% elif data.course_type == "cyber_security" %}
+        "15" oylik, 180 akademik soatlik o'quv dasturi asosidagi Coursera platformasining "IBM and ISC2 Cybersecurity Specialist Professional Certificate"
+    {% elif data.course_type == "graphic_design" %}
+        "10" oylik, 120 akademik soatlik o'quv dasturi asosidagi Coursera platformasining "Microsoft UX Design Professional Certificate"
+    {% elif data.course_type == "motion_design" %}
+        "10" oylik, 120 akademik soatlik o'quv dasturi asosidagi Coursera platformasining "Epic Games Game Design Professional Certificate"
+    {% elif data.course_type == "it_kids_3" %}
+        IT for KIDS (3 oylik)
+    {% elif data.course_type == "it_kids_17" %}
+        IT for KIDS (17 oylik)
+    {% else %}
+        tanlanmagan kurs
+    {% endif %}
+</strong> Dasturi bo’yicha ta'lim xizmatlarini taqdim etadi va Buyurtmachi xizmatlar uchun haq to'lash majburiyatini oladi.</p>
+<p>2. IJROCHINING HUQUQLARI VA MAJBURIYATLARI</p>
+<p>2.1. Ijrochi o'qish to’lovi kechiktirilib to'langan taqdirda, O’quvchining darslarga kirishini cheklash huquqiga ega.</p>
+<p>2.2. Ijrochi 5(besh) kishidan ko'p bo'lmagan guruhlar uchun o'quv soatlari sonini (yoki mashg'ulotlar sonini), o'quv kursi dasturining to'liq hajmini saqlagan holda, qisqartirish huquqiga ega.</p>
+<p>2.3. Guruhlarda o'quvchilar soni kamaygan taqdirda, Ijrochi bunday guruhlarni tarqatib yuborish huquqini saqlab qolgan holda, O’quvchini boshqa alternativ guruhda o'qishini davom ettirish imkoniyatini yaratadi. Bu holatda to'lov qaytarib berilmaydi. Agar guruhning darajasi O’quvchining bilimiga mos kelmasa yoki taklif qilingan vaqt O’quvchiga noqulay bo’lsa, unda Ijrochi O’quvchiga boshqa mos guruhni tanlashi uchun to’lov pulini 3(uch) haftagacha muzlatib qo’yishni ta'minlaydi.</p>
+<p>2.4. Ijrochi, agar O’quvchi tomonidan oyiga uch martadan ko'proq dars o'tkazib yuborilsa, xizmat ko'rsatishni to'xtatish huquqiga ega. Shu bilan birga, ilgari to'langan summa qaytarib berilmaydi yoki muzlatib qo'yilmaydi va keyingi oyga o'tkazilmaydi. Bunday hollarda, Ijrochi, istisno tariqasida, O’quvchiga boshqa darajadagi ta'limni davom ettirish imkoniyatini berishi mumkin, ammo kafolat bermaydi;</p>
+<p>2.5. Ijrochi ta'lim to'lovining ilgari to'langan miqdorini qaytarmaslik huquqini saqlab qolgan holda, o'qishning butun davrida (yoki istalgan bosqichida) O'qituvchi xodimlar tarkibiga o'zgartirishlar kiritish huquqiga ega. </p>
+<p>2.6. Buyurtmachi(O’quvchi)ning aybi bilan qoldirilgan darslar uchun va (yoki) ushbu Shartnomaning 2.1., 5.2., 7.1. va 7.2. bandlarida ko'rsatilgan hollarda, o'tkazib yuborilgan darslar va ularning narxi qoplanmaydi.</p>
+<p>3. BUYURTMACHINING HUQUQLARI VA MAJBURIYATLARI</p>
+<p>3.1. Ijrochiga tegishli mol-mulkni asrab-avaylash va mulkga yetkazilgan moddiy zararni qoplash;</p>
+<p>3.2. Ijrochining ichki-tartib qoidalariga rioya qilish, dars paytida aloqa vositalaridan foydalanmaslik.</p>
+<p>3.3. O’quvchi Ijrochi tomonidan ta’lim dasturi bo’yicha o’rnatilgan Normativlarni qat'iy belgilangan davr(muddat) ichida topshirishi kerak.  Normativlar topshirilmagan taqdirda, O’quvchi Dasturni muvaffaqiyatli yakunlamagan hisoblanadi va ishga olinishi uchun tavsiya etilmaydi. Ijrochi O’quvchiga Normativlarni topshirishi uchun qo'shimcha haq evaziga muddat belgilashi mumkin. Agar O’quvchi tomonidan Normativlar muvaffaqiyatli topshirilsa, ishga tavsiya qilish uchun loyiq deb topiladi va mavjud hamkor tashkilotlarga amaliyot o'tash uchun yo'naltiriladi. </p>
+<p>4. XIZMATLAR NARXLARI, ShARTLARI VA ULARNI TO'LASH TARTIBI</p>
+<form method="POST" >
+        {% csrf_token %}
+
+<p>4.1. Ushbu Shartnoma bo'yicha ta'lim xizmatlari muddati ___ ______ 2025-__ ______2025. Ta'lim xizmatlarining umumiy narxi, QQSni hisobga olmagan holda, ____________________ UZSni tashkil etadi. Xizmatlar narxi va davomiyligi Preyskurantga muvofiq belgilanadi (2-Ilovaga qarang).</p>
+<p>4.2. O'qish boshlangunga qadar Buyurtmachi tomonidan boshlang'ich to'lov sifatida, ya’ni _ <div>
+           <div>
+            <label for="{{ form.initial_price.id_for_label }}">Boshlang‘ich narx:</label>
+            {{ form.initial_price }}
+            {% if form.initial_price.errors %}
+                <div style="color:red;">{{ form.initial_price.errors }}</div>
+            {% endif %}
+        </div>
+</b>_____________ UZS miqdorda amalga oshiriladi.  </p>
+<p>4.3. Xizmat narxi o'quv xarajatlarining ko'payishi yoki inflyatsiya jarayonlarini hisobga olgan holda o'zgarishi mumkin.</p>
+<p>5.FORS-MAJOR</p>
+<p>5.1. Agar Shartnoma majburiyatlarini bajarmaslik tomonlar Shartnoma tuzishda oldindan ko'ra olmaydigan va oldini ololmaydigan fors-major holatlari natijasida yuzaga kelgan bo'lsa, Tomonlar ushbu Shartnoma bo'yicha majburiyatlarni qisman yoki to'liq bajarmaganliklari uchun javobgarlikdan ozod qilinadi. Ushbu Shartnoma bo'yicha majburiyatlarni bajarishning iloji bo'lmagan sharoitlar yuzaga kelgan Tomon qisqa vaqt ichida boshqa Tomonni ushbu holatlarning boshlanishi (yoki tugashi) to'g'risida xabardor qilishi kerak. </p>
+<p>5.2. Ijrochi tomonidan Fors-Major (jumladan, dars kunlarining ommaviy bayram kunlariga to'g'ri kelishi, O’quv binosiga kirishga vaqtincha cheklovlar, O’quv binosida elektr (yoki suv)ta'minoti uzilishi va bosh.) holatlarda darslar boshqa kunga qoldirilmasdan bekor qilinadi, to’lov summasi esa keyingi oyga o'tkazilmaydi va qaytarib berilmaydi (yoki muzlatib qo'yilmaydi). Bunday hollarda, Ijrochi Fors-Major holatlarida o'tilmagan dars o'rniga qo'shimcha dars o'tish huquqini o'zida saqlab qoladi.</p>
+<p>5.3. Agarda 5.2-bandda ko'rsatilgan Fors-Major holatlarining amal qilish muddati vaqtinchalik emas, balki uzoq cho’zilib ushbu Shartnomaning bajarilishiga sezilarli darajada to'sqinlik qiladigan bo'lsa, Tomonlar kelishilgan holda Shartnomani bekor qiladilar, shu bilan birga ko'rsatilgan xizmatlar hajmi bo'yicha o'zaro hisob-kitoblar amalga oshiriladi.</p>
+<p>6. KORRUPSIYAGA QARSHI SHARTLASHUV</p>
+<p>6.1.Tomonlar, ularning affillangan (o‘zaro bog‘langan) shaxslari va xodimlari, ushbu Shartnoma bo‘yicha o‘z majburiyatlarini bajarishlari davomida korrupsiyaga qarshi kurashish sohasidagi O‘zbekiston Respublikasining amaldagi qonun hujjatlari talablarining buzilishiga olib keladigan va/yoki korrupsiya xarakteriga ega bo‘lgan, shu jumladan (ammo bu bilan cheklanmay) pora berish yoki; berishni vaʼda qilish, taʼmagirlik, pora olishga bevosita yoki bilvosita rozi bo‘lish xatti- harakatlari/harakatsizliklarini sodir etmaydilar.</p>
+<p>6.2. Tomonlar, ularning kaffillangan (o‘zaro bog‘langan) shaxslari va xodimlari boshqa Tomonning xodimlari yoki vakolatlangan vakillarini qandaydir tarzda rag‘batlantirishdan shu jumladan pul so‘mmalari, sovg‘alarni taqdim etish, ularning manziliga xizmatlarni beg‘araz ko‘rsatish yoki; bu xodim yokt vakolatlangan vakil tomonidan uni rag‘batlantiruvchi Tomon foydasiga qandaydir xatti-harakatlarni/harakatsizliklar bajarilishini taʼminlashga qaratilgan ishlarni bajarishdan voz kechadilar deb maʼlum qiladilar.</p>
+<p>6.3. Tomonlar ushbu shartnomaning 6.1. va 6.2. bandidagi talablarni buzish sodir etilganligi yoki sodir etilishi mumkinligi to‘g‘risidagi shubhalar yuzaga kelgan holda, tegishli Tomon bu haqda ikkinchi Tomonni xabardor qilish, korrupsiya bilan kurashish sohasidagi O‘zbekiston Respublikasi qonun hujjatlarining normalari buzilganligi faktining rad etib bo‘lmaydigan dalillari mavjudbo‘lgan holda esa — amaldagi qonun hujjatlarida belgilangan tartibda vakolatlangan organlarni ham xabardor qilish majburiyatini o‘z zimmmasiga oladi.</p>
+<p>7.YAKUNIY QOIDALAR</p>
+<p>7.1. Ijrochi o’zining ta’lim xizmatlari Buyurtmachi(O’quvchi)ning kutgan umid-istaklariga muvofiq emasligi va (yoki) uning subyektiv bahosi uchun javob bermaydi va bu nomuvofiqlik va (yoki) salbiy subyektiv baho o'qish to'lovlarinining qaytarilishi yoki muzlatib qo'yilishi uchun asos bo'lmaydi.</p>
+<p>7.2. Agar Buyurtmachi (O’quvchi) o'qish davrida o'z xohishiga ko'ra o'qishni vaqtincha yoki to'liq to'xtatishga qaror qilganda, Ijrochini xabardor qilsa ham, to’lov puli qaytarib berilmaydi. Ijrochi Buyurtmachi (O’quvchi) foydasiga “Tanaffus” ya’ni 3 (uch) oydan ko'p bo'lmagan muddatda to'lov pulini muzlatish imkoniyatini taqdim etish huquqiga ega, ammo majbur emas. To'lov puli uchinchi shaxslarga (yoki Buyurtmachi qarindoshlariga) o’tadi. “Tanaffus” atamasi qaytarib berishni anglatmaydi va to’lov puli 3 (uch) oylik muzlatishdan keyin tugaydi (kuyadi).</p>
+<p>7.3. Tomonlar ushbu Shartnomani bajarish jarayonida yuzaga keladigan nizolar va kelishmovchiliklarni o'zaro muzokaralar yo'li bilan hal qilish uchun barcha zarur choralarni ko'rishadi. Agar Tomonlar o'rtasida yuzaga kelgan nizolar va kelishmovchiliklar o'zaro muzokaralar yo'li bilan hal etishning imkoni bo’lmasa, ular O'zbekiston Respublikasining amaldagi qonunchiligiga muvofiq, Sud tartibida hal etiladi.</p>
+<p>7.4. Ushbu shartnomada tartibga solinmagan barcha masalalar O'zbekiston Respublikasining amaldagi qonunchiligiga muvofiq hal qilinadi.</p>
+<p>7.5. Ushbu Shartnomani imzolashdan oldin, Buyurtmachi (O’quvchi) shartnomaning har bir bandini diqqat bilan o'rganib chiqqanligini, tushunganini va qabul qilganligini tasdiqlaydi. Ushbu Shartnoma Tomonlarning har biri uchun ikki nusxada tuzildi. </p>
+<p>7.6. Shartnoma Tomonlar imzolagan kundan boshlab kuchga kiradi va Tomonlar ushbu Shartnoma bo’yicha majburiyatlarni bajargunga qadar amal qiladi. Agar oxirgi oylik dars tugaganidan keyin, o’n kalendar kun ichida Ijrochi ko’rsatgan xizmatlar sifati to'g'risida Buyurtmachi(O’quvchi)dan yozma ravishda e'tiroz bildirilmagan bo'lsa, Xizmatlar Ijrochi tomonidan to'g'ri taqdim etilgan va to'liq qabul qilingan deb hisoblanadi.</p>
+<p>           8. TARAFLARNING MANZILLARI VA REKVIZITLARI</p>
+<table border='1'>
+<tr><td>IJROCHI </td><td>BUYURTMACHI </td><td>O’QUVCHI </td></tr>
+<tr><td>"IT TA’LIM BERISH MARKAZI USTUDY" MChJ
+MANZIL: Toshkent sh., Shayxontoxur t., Navoiy k., 28-B
+TIF Milliy Bank AJ Shayxontoxur
+H/R: 20208000000468629002
+STIR: 303337614
+IFUT: _______
+МФО: 00450
+TEL.: (998 50) 779 5353
+GUVOHNOMA Регистр. №008311-09/15.05.2015
+Direktor: _______________ RAXMATXO‘JAYEV A. A</td><td>F.I.Sh._______<strong>{{ data.parent_full_name }}</strong>___________ __________________________________________________
+Pasport ma'lumotlari (Pasport seriyasi, qachon va kim tomonidan berilgan) _________________________ __________________________________________________
+Doimiy yashash (ro'yxatdan o'tgan)joyi ___________________________________________________________________________<br>
+TEL.:{{ data.phone }}<br>
+IMZO</td><td>F.I.Sh.____________________<strong>{{ data.full_name }}</strong>__________________________________________
+Pasport ma'lumotlari (Pasport seriyasi, qachon va kim tomonidan berilgan) _____________________________________________________________________
+Doimiy yashash (ro'yxatdan o'tgan)joyi _____________________________________________________________________<br>
+TEL.:{{ data.phone }}<br>
+IMZO
+</td></tr>
+</table>
+<table border='1'>
+<tr><td>                                           "U-STUDY" o'quv markazida Yuridik shaxslarga</td></tr>
+<tr><td>o'qitish bo'yicha xizmatlarni ko'rsatish to'g'risidagi </td></tr>
+<tr><td>Shartnomaga 1-SONLI ILOVA</td></tr>
+<tr><td>2025 yil "_____"______________dagi <b>{{ form.contract_number }}</b>_ <label for="{{ form.contract_number.id_for_label }}">Kontrakt raqami:</label>
+        {{ form.contract_number }}
+        {% if form.contract_number.errors %}
+            <div style="color:red;">{{ form.contract_number.errors }}</div>
+        {% endif %}___-son</td></tr>
+</table>
+<table border='1'>
+ <label for="{{ form.price.id_for_label }}">Jami narx (so'mda):</label>
+        {{ form.price }}
+        {% if form.price.errors %}
+            <div style="color:red;">{{ form.price.errors }}</div>
+        {% endif %}
+
+     {{ form.monthly_duration }}
+        {% if form.monthly_duration.errors %}
+            <div style="color:red;">{{ form.monthly_duration.errors }}</div>
+        {% endif %}
+     {% for date in months %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>«{{ date }}» dan kechiktirmagan holda</td>
+            <td></td>
+        </tr>
+        {% endfor %}
+<tr><td>№ </td><td>To’lovning davri
+</td><td>To'lov summasi (so'mda)</td></tr>
+      {% for date in months %}
+
+    <tr><td>1</td><td>«{{ date }}»  dan kechiktirmagan holda</td><td></td></tr>
+
+  {% endfor %}
+
+<tr><td>O'qitish uchun jami to’lov narxi </td><td>O'qitish uchun jami to’lov narxi </td><td></td></tr>
+</table>
+
+
+
+
+
+    {% if show_download_links %}
+
+    <p style="margin-top: 10px;">
+    <p>
+        <a href="{% url 'contract:download_contract_pdf' contract.id %}">📄 PDF yuklab olish</a> |
+        <a href="{% url 'contract:download_contract_word' contract.id %}">📝 Word yuklab olish</a>
+    </p>
+{% endif %}
+
+<label for="{{ form.is_confirmed.id_for_label }}">Shartnoma tasdiqlaysizmi</label>
+        {{ form.is_confirmed }}
+        {% if form.is_confirmed.errors %}
+            <div style="color:red;">{{ form.is_confirmed.errors }}</div>
+        {% endif %}
+          <button type="submit">Shartnomani yaratish (PDF + Word)</button>
+    </form>
+    </p>
+
+</body>
+</html>

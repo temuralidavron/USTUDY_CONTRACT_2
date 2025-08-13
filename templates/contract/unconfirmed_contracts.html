@@ -33,7 +33,7 @@
                             <td>{{ contract.age }}</td>
                             <td>{{ contract.created_at|date:"d-m-Y H:i" }}</td>
                             <td>
-                                <a href="{% url 'contract:admin_preview_contract' contract.id %}" class="btn btn-sm btn-outline-primary">
+                                <a href="{% url 'contract:update_contract' contract.id %}" class="btn btn-sm btn-outline-primary">
                                     Ko‘rish va Tasdiqlash
                                 </a>
                             </td>

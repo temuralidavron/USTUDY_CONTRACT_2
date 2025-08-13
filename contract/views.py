@@ -1,9 +1,14 @@
+
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from datetime import timedelta
+from dateutil.relativedelta import relativedelta
+from django.utils.timezone import localtime
 
 from account.utils import admin_required
-from .forms import ContractForm, AdminContractForm
+from .forms import ContractForm, AdminContractForm, ContractAdminForm
 from .models import Contract
 
 from contract.models import Contract
@@ -133,6 +138,25 @@ def admin_fill_contract(request, pk):
 
     return render(request, "contract/admin_fill_contract.html", {"form": form, "contract": contract})
 
+@admin_required
+def update_contract(request, pk):
+    contract = get_object_or_404(Contract, pk=pk)
+
+    if request.method == 'POST':
+        print(request.POST)
+        form = ContractAdminForm(request.POST, instance=contract)
+        if form.is_valid():
+            print(form.cleaned_data)
+            form.save()
+            return redirect('contract:unconfirmed_contracts')
+        else:
+            print(form.errors)
+    else:
+        form = ContractAdminForm(instance=contract)
+
+    return render(request, 'contract/update_contract.html', {
+        'form': form,
+        'data': contract    })
 
 
 @admin_required
@@ -157,7 +181,9 @@ def admin_finalize_contract(request, pk):
     doc.add_paragraph(f"Yosh: {contract.age}")
     doc.add_paragraph(f"Manzil: {contract.address}")
     doc.add_paragraph(f"Kurs: {contract.course_type}")
-    doc.add_paragraph(f"1 oylik narx: {contract.monthly_price} so‘m")
+    doc.add_paragraph(f"1-oylik narx: {contract.initial_price} so‘m")
+    doc.add_paragraph(f"Har oylik narx: {contract.price} so‘m")
+    doc.add_paragraph(f"Kurs muddati: {contract.monthly_duration} so‘m")
     # boshqa maydonlar...
 
     # Faylga saqlash yoki yuborish
@@ -197,8 +223,25 @@ import io
 @admin_required
 def download_contract_pdf(request, pk):
     contract = get_object_or_404(Contract, pk=pk)
-    template = get_template("contract/contract.html")
-    html = template.render({"contract": contract, "admin_preview": True,"show_download_links": False})
+    template = get_template("contract/save_contract.html")
+    start_date = localtime(contract.created_at).date()
+    duration = contract.monthly_duration
+    if duration is None:
+        duration = 1
+    sum_course = (contract.price * (duration-1))+contract.initial_price
+    print(sum_course)
+
+    intervals = [start_date + relativedelta(months=i) for i in range(int(duration))]
+    html = template.render({
+        "data": contract,
+        "admin_preview": True,
+        "intervals": intervals,
+        'sum_course': sum_course,
+        "show_download_links": False
+    })
+
+
+
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename=contract_{contract.id}.pdf'
@@ -212,8 +255,23 @@ def download_contract_pdf(request, pk):
 @admin_required
 def download_contract_word(request, pk):
     contract = get_object_or_404(Contract, pk=pk)
-    template = get_template("contract/contract.html")
-    html = template.render({"contract": contract, "admin_preview": True,"show_download_links": False})
+    template = get_template("contract/save_contract.html")
+    start_date = localtime(contract.created_at).date()
+    duration = contract.monthly_duration
+    if duration is None:
+        duration = 1
+    sum_course = (contract.price * (duration - 1)) + contract.initial_price
+    print(sum_course)
+
+    intervals = [start_date + relativedelta(months=i) for i in range(int(duration))]
+    html = template.render({
+        "data": contract,
+        "admin_preview": True,
+        "intervals": intervals,
+        'sum_course': sum_course,
+        "show_download_links": False
+    })
+
 
     response = HttpResponse(content_type='application/msword')
     response['Content-Disposition'] = f'attachment; filename=contract_{contract.id}.doc'
