@@ -45,6 +45,8 @@ class Contract(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2,blank=True, null=True)
     contract_number = models.PositiveIntegerField(blank=True, null=True)
     monthly_duration = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    signature = models.ImageField(upload_to="signatures/", blank=True, null=True)  # migrate qilish kerak
+
 
 
     def __str__(self):

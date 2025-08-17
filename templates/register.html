@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+  <div class="flex items-center justify-center p-12">
+    <div class="mx-auto w-full max-w-[550px] bg-white">
+      <form>
+        <div class="mb-5">
+          <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+            Username
+          </label>
+          <input type="text" name="name" id="name" placeholder="Full Name"
+            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+        </div>
+        <div class="mb-5">
+          <label for="phone" class="mb-3 block text-base font-medium text-[#07074D]">
+            Phone Number
+          </label>
+          <input type="text" name="phone" id="phone" placeholder="Enter your phone number"
+            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+        </div>
+
+        <div class="mb-5">
+          <label for="email" class="mb-3 block text-base font-medium text-[#07074D]">
+            Email
+          </label>
+          <input type="text" name="email" id="email" placeholder="Enter your email"
+            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+        </div>
+
+        <div class="pt-3">
+          <div class="-mx-3 flex flex-wrap">
+            <div class="w-full px-3 sm:w-1/2">
+              <label for="tel_number" class="mb-3 block text-base font-medium text-[#07074D]">
+                Telefon nomer
+              </label>
+              <div class="mb-5">
+                <input type="tel" name="tel_number" id="tel_number" placeholder="+998 90 123 45 67"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+              <div class="mb-5">
+                <label for="age" class="mb-3 block text-base font-medium text-[#07074D]">Age</label>
+                <input type="text" name="age" id="age" placeholder="18"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-5 pt-3">
+          <div class="-mx-3 flex flex-wrap">
+            <div class="w-full px-3 sm:w-1/2">
+              <div class="mb-5">
+                <label for="password" class="mb-3 block text-base font-medium text-[#07074D]">Password</label>
+                <input type="password" name="area" id="password" placeholder="Enter password"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+              <label for="password_confirmation" class="mb-3 block text-base font-medium text-[#07074D]">Password
+                confirmation
+              </label>
+              <div class="mb-5">
+                <input type="text" name="password_confirmation" id="password_confirmation"
+                  placeholder="Enter confirmation"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button
+            class="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+            Ro'yhatdan o'tish
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

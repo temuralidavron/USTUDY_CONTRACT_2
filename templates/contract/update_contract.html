@@ -89,7 +89,11 @@ IMZO</td><td>F.I.Sh.____________________<strong>{{ data.full_name }}</strong>___
 Pasport ma'lumotlari (Pasport seriyasi, qachon va kim tomonidan berilgan) _____________________________________________________________________
 Doimiy yashash (ro'yxatdan o'tgan)joyi _____________________________________________________________________<br>
 TEL.:{{ data.phone }}<br>
-IMZO
+{% if data.signature %}
+  IMZO  <img src="{{ data.signature.url }}" alt="Imzo" style="max-width:300px; border:1px solid #000;">
+{% else %}
+    <p>Imzo qo‘yilmagan</p>
+{% endif %}
 </td></tr>
 </table>
 <table border='1'>
@@ -145,10 +149,12 @@ IMZO
 {% endif %}
 
 <label for="{{ form.is_confirmed.id_for_label }}">Shartnoma tasdiqlaysizmi</label>
-        {{ form.is_confirmed }}
-        {% if form.is_confirmed.errors %}
-            <div style="color:red;">{{ form.is_confirmed.errors }}</div>
+        {{ form.saved }}
+        {% if form.saved.errors %}
+            <div style="color:red;">{{ form.saved.errors }}</div>
         {% endif %}
+
+
           <button type="submit">Shartnomani yaratish (PDF + Word)</button>
     </form>
     </p>

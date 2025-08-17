@@ -1,12 +1,17 @@
 import re
 
 from django import forms
+from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 
 from account.models import CustomUser
 
 class CustomUserCreationForm(forms.ModelForm):
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password = forms.CharField(
+        label='Password',
+        widget=forms.PasswordInput,
+        help_text=password_validation.password_validators_help_text_html()
+    )
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
     class Meta:
@@ -18,37 +23,44 @@ class CustomUserCreationForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
 
-    def clean_age(self):
-        age = self.cleaned_data.get("age")
-        if age is not None and age < 0:
-            raise ValidationError("Yosh manfiy bo'lishi mumkin emas.")
-        return age
+    # def clean_age(self):
+    #     age = self.cleaned_data.get("age")
+    #     if age is not None and age < 0:
+    #         raise ValidationError("Yosh manfiy bo'lishi mumkin emas.")
+    #     return age
 
-    def clean_phone(self):
-        phone = self.cleaned_data.get("phone", "").strip()
+    # def clean_phone(self):
+    #     phone = self.cleaned_data.get("phone", "").strip()
+    #
+    #     # Agar foydalanuvchi faqat raqam kiritgan bo‘lsa (masalan: 901234567), +998 qo‘shamiz
+    #     if re.fullmatch(r'\d{9}', phone):
+    #         phone = '+998' + phone
+    #
+    #     # +998 bilan boshlanishini tekshirish
+    #     if not phone.startswith("+998"):
+    #         raise ValidationError("Telefon raqam +998 bilan boshlanishi kerak.")
+    #
+    #     # +998 dan keyin 9 ta raqam bo‘lishi kerak
+    #     digits = phone[4:]
+    #     if not re.fullmatch(r'\d{9}', digits):
+    #         raise ValidationError("Telefon raqam +998 dan keyin faqat 9 ta raqam bo‘lishi kerak.")
+    #
+    #     return phone
 
-        # Agar foydalanuvchi faqat raqam kiritgan bo‘lsa (masalan: 901234567), +998 qo‘shamiz
-        if re.fullmatch(r'\d{9}', phone):
-            phone = '+998' + phone
-
-        # +998 bilan boshlanishini tekshirish
-        if not phone.startswith("+998"):
-            raise ValidationError("Telefon raqam +998 bilan boshlanishi kerak.")
-
-        # +998 dan keyin 9 ta raqam bo‘lishi kerak
-        digits = phone[4:]
-        if not re.fullmatch(r'\d{9}', digits):
-            raise ValidationError("Telefon raqam +998 dan keyin faqat 9 ta raqam bo‘lishi kerak.")
-
-        return phone
-
-    def clean_password2(self):
-        password = self.cleaned_data.get('password')
-        password2 = self.cleaned_data.get('password2')
-        if password and password2 and password != password2:
-            raise forms.ValidationError("Parollar mos emas!")
-        return password2
-
+    # def clean_password(self):
+    #     password = self.cleaned_data.get('password')
+    #     password_validation.validate_password(password, self.instance)
+    #     return password
+    #
+    # def clean_password2(self):
+    #     password = self.cleaned_data.get('password')
+    #     password2 = self.cleaned_data.get('password2')
+    #
+    #     if password and password2 and password != password2:
+    #         raise ValidationError("Parollar mos emas!")
+    #
+    #     return password2
+    #
 
 
 
@@ -73,22 +85,3 @@ class LoginForm(forms.Form):
 
 
 
-#
-#
-# class CustomUserCreationForm(forms.ModelForm):
-#     password = forms.CharField(label='Password', widget=forms.PasswordInput)
-#     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
-#     class Meta:
-#         model = CustomUser
-#         fields = [
-#             'username',
-#             'email',
-#             'age',
-#             'phone',
-#             'password',
-#             'password2',
-#
-#         ]
-#
-#     def save(self, commit=True):
-#         return CustomUser.objects.create_user(**self.cleaned_data)

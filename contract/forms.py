@@ -23,10 +23,12 @@ class ContractForm(forms.ModelForm):
             "parent_document_given_date",
             "is_confirmed",
         ]
+
         widgets = {
             "document_given_date": forms.DateInput(attrs={"type": "date"}),
             "parent_document_given_date": forms.DateInput(attrs={"type": "date"}),
         }
+    signature_data = forms.CharField(widget=forms.HiddenInput(), required=False)  # JS yuboradi
 
     def clean_age(self):
         age = self.cleaned_data.get("age")
@@ -63,11 +65,11 @@ class ContractAdminForm(forms.ModelForm):
         model = Contract
         fields = [
 
-            "is_confirmed",
             "initial_price",
             'price',
             'contract_number',
-            "monthly_duration"
+            "monthly_duration",
+            'saved'
         ]
 
         labels = {

@@ -1,4 +1,7 @@
+import base64
+import os
 
+from django.core.files.base import ContentFile
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -8,10 +11,13 @@ from dateutil.relativedelta import relativedelta
 from django.utils.timezone import localtime
 
 from account.utils import admin_required
+from config import settings
 from .forms import ContractForm, AdminContractForm, ContractAdminForm
 from .models import Contract
 
 from contract.models import Contract
+from .utils import link_callback
+
 
 def home(request):
     unconfirmed_count = 0
@@ -27,7 +33,7 @@ from .models import Contract
 @login_required
 def my_contracts(request):
     try:
-        contract = Contract.objects.get(user=request.user)
+        contract = Contract.objects.filter(user=request.user).first()
     except Contract.DoesNotExist:
         contract = None
 
@@ -57,13 +63,27 @@ def create_contract(request):
 
     hidden_fields = ['document_series', 'jshshir', 'document_given_by', 'document_given_date']
 
+    # if request.method == "POST":
+    #     form = ContractForm(request.POST)
+    #     if form.is_valid():
+    #         contract = form.save(commit=False)
+    #         contract.user = request.user
+    #         contract.save()
+    #         return redirect('contract:contract_detail', contract_id=contract.id)  # 👈
     if request.method == "POST":
-        form = ContractForm(request.POST)
+        form = ContractForm(request.POST, request.FILES)
         if form.is_valid():
             contract = form.save(commit=False)
             contract.user = request.user
+
+            signature_data = form.cleaned_data.get('signature_data')
+            if signature_data:
+                format, imgstr = signature_data.split(';base64,')
+                ext = format.split('/')[-1]
+                contract.signature = ContentFile(base64.b64decode(imgstr), name=f"signature_{request.user.id}.{ext}")
+
             contract.save()
-            return redirect('contract:contract_detail', contract_id=contract.id)  # 👈
+            return redirect('contract:contract_detail', contract_id=contract.id)
     else:
         form = ContractForm()
     return render(request, "contract/contract_form.html", {"form": form, "hidden_fields": hidden_fields})
@@ -110,7 +130,6 @@ def confirm_contract(request):
 
 
 
-from django.contrib.admin.views.decorators import staff_member_required
 
 @admin_required
 def unconfirmed_contracts(request):
@@ -148,7 +167,7 @@ def update_contract(request, pk):
         if form.is_valid():
             print(form.cleaned_data)
             form.save()
-            return redirect('contract:unconfirmed_contracts')
+            return redirect('contract:confirmed_contracts')
         else:
             print(form.errors)
     else:
@@ -229,7 +248,7 @@ def download_contract_pdf(request, pk):
     if duration is None:
         duration = 1
     sum_course = (contract.price * (duration-1))+contract.initial_price
-    print(sum_course)
+
 
     intervals = [start_date + relativedelta(months=i) for i in range(int(duration))]
     html = template.render({
@@ -237,7 +256,7 @@ def download_contract_pdf(request, pk):
         "admin_preview": True,
         "intervals": intervals,
         'sum_course': sum_course,
-        "show_download_links": False
+        "show_download_links": False,
     })
 
 
@@ -246,7 +265,7 @@ def download_contract_pdf(request, pk):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename=contract_{contract.id}.pdf'
 
-    pisa_status = pisa.CreatePDF(html, dest=response)
+    pisa_status = pisa.CreatePDF(html, dest=response,link_callback=link_callback)
     if pisa_status.err:
         return HttpResponse('Xatolik yuz berdi PDF yaratishda')
     return response

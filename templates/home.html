@@ -23,7 +23,6 @@
         {% else %}
             <!-- 👨‍🎓 Oddiy foydalanuvchi -->
             <a href="{% url 'contract:create_contract' %}" class="btn btn-info me-2">📝 Shartnoma yaratish</a>
-            <a href="{% url 'contract:my_contracts' %}" class="btn btn-secondary me-2">📄 Mening arizalarim</a>
         {% endif %}
         <a href="{% url 'account:logout' %}" class="btn btn-danger">Chiqish</a>
     {% endif %}

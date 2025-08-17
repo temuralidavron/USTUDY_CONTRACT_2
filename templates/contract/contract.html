@@ -70,15 +70,22 @@ IFUT: _______
 МФО: 00450 
 TEL.: (998 50) 779 5353
 GUVOHNOMA Регистр. №008311-09/15.05.2015
-Direktor: _______________ RAXMATXO‘JAYEV A. A</td><td>F.I.Sh._______{{ data.parent_full_name }}___________ __________________________________________________
+Direktor: _______________ RAXMATXO‘JAYEV A. A</td><td>F.I.Sh.__________________ __________________________________________________
 Pasport ma'lumotlari (Pasport seriyasi, qachon va kim tomonidan berilgan) _________________________ __________________________________________________
 Doimiy yashash (ro'yxatdan o'tgan)joyi ___________________________________________________________________________
 TEL.:____________________
-IMZO</td><td>F.I.Sh.______________________________________________________________
+IMZO</td><td>F.I.Sh.________{{ data.parent_full_name }}______________________________________________________
 Pasport ma'lumotlari (Pasport seriyasi, qachon va kim tomonidan berilgan) _____________________________________________________________________
 Doimiy yashash (ro'yxatdan o'tgan)joyi _____________________________________________________________________
 TEL.:___________________
-IMZO
+    {% if data.signature %}
+    <h5>✍ Imzo</h5>
+  IMZO  <img src="{{ data.signature.url }}" alt="Imzo" style="max-width:300px; border:1px solid #000;">
+{% else %}
+    <p>Imzo qo‘yilmagan</p>
+{% endif %}
+
+
 </td></tr>
 </table>
 <table border='1'>

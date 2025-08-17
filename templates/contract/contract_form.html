@@ -14,7 +14,7 @@
         {% csrf_token %}
 
         {% for field in form %}
-{% if field.name in hidden_fields %}
+          {% if field.name in hidden_fields %}
             <div class="mb-3 passport-metrka d-none" id="field-{{ field.name }}">
               <label class="form-label fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
               {{ field|add_class:"form-control" }}
@@ -44,32 +44,52 @@
           {% endif %}
         {% endfor %}
 
+        <!-- ✍️ Imzo maydoni -->
+      <div class="mb-3">
+  <label class="form-label fw-semibold">Imzo</label>
+  <canvas id="signature-pad" style="border: 2px solid #000; width: 100%; height: 200px; border-radius: 8px;"></canvas>
+  <button type="button" class="btn btn-secondary btn-sm mt-2" id="clear">🧹 Tozalash</button>
+  <input type="hidden" name="signature_data" id="signature-data">
+</div>
         <button type="submit" class="btn btn-success px-4">✅ Yuborish</button>
       </form>
     </div>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const docType = document.getElementById('id_document_type');
-    const fields = ['document_series', 'jshshir', 'document_given_by', 'document_given_date'];
-
-    function toggleFields() {
-      const type = docType.value;
-      fields.forEach(name => {
-        const el = document.getElementById(`field-${name}`);
-        if (!el) return;
-        if (type === 'passport' || type === 'metrka') {
-          el.classList.remove('d-none');
-        } else {
-          el.classList.add('d-none');
-        }
-      });
+    // Canvasni to'g'ri o'lchash (pixel ratio bo'yicha)
+    const canvas = document.getElementById('signature-pad');
+    function resizeCanvas() {
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      canvas.width = canvas.offsetWidth * ratio;
+      canvas.height = canvas.offsetHeight * ratio;
+      canvas.getContext("2d").scale(ratio, ratio);
     }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
 
-    toggleFields();
-    docType.addEventListener('change', toggleFields);
+    // ✍️ Signature pad sozlamalari (ingichka chiziq, mos harakat)
+    const signaturePad = new SignaturePad(canvas, {
+      backgroundColor: 'white',
+      penColor: 'black',
+      minWidth: 0.8, // eng ingichka qalinlik
+      maxWidth: 2.0, // eng qalin
+    });
+
+    // Tozalash tugmasi
+    document.getElementById('clear').addEventListener('click', () => {
+      signaturePad.clear();
+    });
+
+    // Form submit bo'lganda imzoni yuborish
+    document.querySelector('form').addEventListener('submit', function () {
+      if (!signaturePad.isEmpty()) {
+        document.getElementById('signature-data').value = signaturePad.toDataURL('image/png');
+      }
+    });
   });
 </script>
 {% endblock %}
