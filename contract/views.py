@@ -1,5 +1,7 @@
-import base64
 import os
+import qrcode
+import base64
+from io import BytesIO
 
 from django.core.files.base import ContentFile
 from django.http import HttpResponseBadRequest
@@ -58,18 +60,7 @@ from django.urls import reverse
 
 @login_required
 def create_contract(request):
-    # if Contract.objects.filter(user=request.user).exists():
-    #     return redirect('contract:my_contracts')
-
-    hidden_fields = ['document_series', 'jshshir', 'document_given_by', 'document_given_date']
-
-    # if request.method == "POST":
-    #     form = ContractForm(request.POST)
-    #     if form.is_valid():
-    #         contract = form.save(commit=False)
-    #         contract.user = request.user
-    #         contract.save()
-    #         return redirect('contract:contract_detail', contract_id=contract.id)  # 👈
+    # hidden_fields = ['document_given_by', 'document_given_date']
     if request.method == "POST":
         form = ContractForm(request.POST, request.FILES)
         if form.is_valid():
@@ -86,6 +77,13 @@ def create_contract(request):
             return redirect('contract:contract_detail', contract_id=contract.id)
     else:
         form = ContractForm()
+    hidden_fields = [
+        "parent_full_name",
+        "parent_document_series",
+        "parent_jshshir",
+        "parent_document_given_by",
+        "parent_document_given_date",
+    ]
     return render(request, "contract/contract_form.html", {"form": form, "hidden_fields": hidden_fields})
 
 
@@ -239,7 +237,7 @@ from django.http import HttpResponse
 from .models import Contract
 import io
 
-@admin_required
+# @admin_required
 def download_contract_pdf(request, pk):
     contract = get_object_or_404(Contract, pk=pk)
     template = get_template("contract/save_contract.html")
@@ -251,13 +249,28 @@ def download_contract_pdf(request, pk):
 
 
     intervals = [start_date + relativedelta(months=i) for i in range(int(duration))]
+    # QR
+    # qr_url = request.build_absolute_uri(
+    #     reverse("http://185.8.213.46:8081/", kwargs={"contract_id": contract.id})
+    # )
+    qr_url = f"http://185.8.213.46:8081/contracts/{contract.id}/"
+
+    # 🔹 QR kod yaratish
+    qr = qrcode.make(qr_url)
+    buffer = BytesIO()
+    qr.save(buffer, format="PNG")
+    qr_base64 = base64.b64encode(buffer.getvalue()).decode()
+
     html = template.render({
         "data": contract,
         "admin_preview": True,
         "intervals": intervals,
         'sum_course': sum_course,
         "show_download_links": False,
+        "qr_code": qr_base64,
+
     })
+
 
 
 

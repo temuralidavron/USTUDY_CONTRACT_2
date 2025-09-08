@@ -140,8 +140,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.CustomUser'
 
 
-import sys
-import os
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, os.path.join(BASE_DIR, 'contract'))
+# import sys
+# import os
+#
+# BASE_DIR = Path(__file__).resolve().parent.parent
+# sys.path.insert(0, os.path.join(BASE_DIR, 'contract'))

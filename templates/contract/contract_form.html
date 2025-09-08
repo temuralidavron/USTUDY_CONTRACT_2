@@ -10,17 +10,16 @@
       <h4 class="mb-0">📝 Shartnoma to‘ldirish</h4>
     </div>
     <div class="card-body">
-      <form method="post" novalidate>
+      <form method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
 
+        <!-- Form fieldlar -->
         {% for field in form %}
-          {% if field.name in hidden_fields %}
-            <div class="mb-3 passport-metrka d-none" id="field-{{ field.name }}">
+          {% if field.name|slice:":7" == "parent_" %}
+            <!-- Ota-ona maydonlari (faqat metrka uchun) -->
+            <div class="mb-3 parent-fields d-none" id="field-{{ field.name }}">
               <label class="form-label fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
               {{ field|add_class:"form-control" }}
-              {% if field.help_text %}
-                <div class="form-text text-muted">{{ field.help_text }}</div>
-              {% endif %}
               {% for error in field.errors %}
                 <div class="text-danger small">{{ error }}</div>
               {% endfor %}
@@ -30,13 +29,12 @@
               {{ field|add_class:"form-check-input" }}
               <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
             </div>
+          {% elif field.name == "signature_data" %}
+            {# signature_data hidden field formdan chiqmasligi uchun bu yerda ko‘rsatmaymiz #}
           {% else %}
             <div class="mb-3">
               <label class="form-label fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
               {{ field|add_class:"form-control" }}
-              {% if field.help_text %}
-                <div class="form-text text-muted">{{ field.help_text }}</div>
-              {% endif %}
               {% for error in field.errors %}
                 <div class="text-danger small">{{ error }}</div>
               {% endfor %}
@@ -45,22 +43,40 @@
         {% endfor %}
 
         <!-- ✍️ Imzo maydoni -->
-      <div class="mb-3">
-  <label class="form-label fw-semibold">Imzo</label>
-  <canvas id="signature-pad" style="border: 2px solid #000; width: 100%; height: 200px; border-radius: 8px;"></canvas>
-  <button type="button" class="btn btn-secondary btn-sm mt-2" id="clear">🧹 Tozalash</button>
-  <input type="hidden" name="signature_data" id="signature-data">
-</div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Imzo</label>
+          <canvas id="signature-pad" style="border: 2px solid #000; width: 100%; height: 200px; border-radius: 8px;"></canvas>
+          <button type="button" class="btn btn-secondary btn-sm mt-2" id="clear">🧹 Tozalash</button>
+          <!-- Imzo hidden input -->
+          <input type="hidden" name="signature_data" id="signature-data">
+        </div>
+
         <button type="submit" class="btn btn-success px-4">✅ Yuborish</button>
       </form>
     </div>
   </div>
 </div>
 
+<!-- SignaturePad kutubxonasi -->
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    // Canvasni to'g'ri o'lchash (pixel ratio bo'yicha)
+    // ✅ Parent fields toggle
+    const documentType = document.getElementById("id_document_type");
+    const parentFields = document.querySelectorAll(".parent-fields");
+
+    function toggleParentFields() {
+      if (documentType.value === "metrka") {
+        parentFields.forEach(field => field.classList.remove("d-none"));
+      } else {
+        parentFields.forEach(field => field.classList.add("d-none"));
+      }
+    }
+    documentType.addEventListener("change", toggleParentFields);
+    toggleParentFields();
+
+    // ✅ Signature pad sozlash
     const canvas = document.getElementById('signature-pad');
     function resizeCanvas() {
       const ratio = Math.max(window.devicePixelRatio || 1, 1);
@@ -71,23 +87,25 @@
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    // ✍️ Signature pad sozlamalari (ingichka chiziq, mos harakat)
     const signaturePad = new SignaturePad(canvas, {
       backgroundColor: 'white',
       penColor: 'black',
-      minWidth: 0.8, // eng ingichka qalinlik
-      maxWidth: 2.0, // eng qalin
+      minWidth: 0.8,
+      maxWidth: 2.0,
     });
 
     // Tozalash tugmasi
     document.getElementById('clear').addEventListener('click', () => {
       signaturePad.clear();
+      document.getElementById('signature-data').value = "";
     });
 
-    // Form submit bo'lganda imzoni yuborish
+    // Form submit → imzoni yuborish
     document.querySelector('form').addEventListener('submit', function () {
       if (!signaturePad.isEmpty()) {
         document.getElementById('signature-data').value = signaturePad.toDataURL('image/png');
+      } else {
+        document.getElementById('signature-data').value = "";
       }
     });
   });

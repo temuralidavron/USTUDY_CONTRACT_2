@@ -1,0 +1,33 @@
+<h2 class="text-2xl font-bold mb-4">👤 Profil: {{ request.user.username }}</h2>
+
+<div class="mb-6 p-4 bg-gray-100 rounded-lg shadow">
+  <p><strong>📞 Telefon:</strong> {{ request.user.phone }}</p>
+  <p><strong>🎂 Yoshi:</strong> {{ request.user.age }}</p>
+  <p><strong>📝 Bio:</strong> {{ profile.bio|default:"Ma'lumot kiritilmagan" }}</p>
+</div>
+
+<hr class="my-6">
+
+<h3 class="text-xl font-semibold mb-4">📄 Shartnomalarim</h3>
+
+{% if contracts %}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for contract in contracts %}
+      <div class="p-4 border rounded-xl shadow hover:shadow-lg transition bg-white">
+        <h4 class="text-lg font-bold mb-2">{{ contract.course_type }}</h4>
+        <p><strong>💰 Narx:</strong> {{ contract.price }} so'm</p>
+        <p><strong>📅 Yaratilgan:</strong> {{ contract.created_at|date:"d-m-Y" }}</p>
+        <p><strong>🔢 Shartnoma №:</strong> {{ contract.contract_number|default:"—" }}</p>
+
+        <div class="mt-4">
+          <a href="{% url 'contract:download_contract_pdf' contract.id %}"
+             class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            ⬇️ Yuklab olish (PDF)
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-gray-600">❌ Sizda hali shartnoma mavjud emas.</p>
+{% endif %}

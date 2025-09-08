@@ -1,7 +1,8 @@
 from .forms import CustomUserCreationForm, LoginForm
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.shortcuts import render, redirect
-
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 def register(request):
     if request.method == "POST":
@@ -41,3 +42,17 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('contract:home')
+
+
+# profile
+
+
+@login_required
+def profile_view(request):
+    profile = request.user  # OneToOne orqali olish
+    contracts = request.user.contract_set.all()  # shu userga tegishli barcha shartnomalar
+
+    return render(request, "account/profile.html", {
+        "profile": profile,
+        "contracts": contracts,
+    })
