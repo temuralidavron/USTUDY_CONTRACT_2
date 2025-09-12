@@ -18,5 +18,6 @@ UZBEK_MONTHS = {
 }
 
 @register.filter
-def uzbek_month(date_obj):
-    return UZBEK_MONTHS.get(date_obj.strftime("%B"), date_obj.strftime("%B"))
+def get_item(month_name):
+    """Oy nomini uzbekchaga o‘giradi"""
+    return UZBEK_MONTHS.get(month_name, month_name)

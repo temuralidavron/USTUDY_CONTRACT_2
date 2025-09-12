@@ -1,6 +1,8 @@
 
 <!DOCTYPE html>
 <html>
+{% load uzbek_month %}
+
 
 <body>
 
@@ -99,7 +101,7 @@ TEL.:___________________
 </td><td>To'lov summasi (so'mda)</td></tr>
         <tr>
     <td>1</td>
-    <td>«{{ intervals.0|date:"d" }}» {{ intervals.0|date:"F" }} dan kechiktirmagan holda</td>
+<td>«{{ interval|date:"d" }}» {{ interval|date:"F"|get_item }} dan kechiktirmagan holda</td>
     <td>{{ data.initial_price }} so‘m</td>
 </tr>
 
@@ -118,18 +120,10 @@ TEL.:___________________
 </table>
 
 
-<form method="POST" action="{% url 'contract:confirm_contract' %}">
-  {% csrf_token %}
-  <input type="hidden" name="contract_id" value="{{ data.id }}">
-  <button type="submit">Shartnoma bilan tanishdim va yuborishga roziman</button>
-</form>
 
 
-{% if admin_preview %}
-    <form method="POST" action="{% url 'contract:admin_finalize_contract' data.id %}">
-        {% csrf_token %}
-        <button type="submit">Shartnomani yaratish (PDF + Word)</button>
-    </form>
+
+
 
     <p style="margin-top: 10px;">
     {% if show_download_links %}
@@ -141,7 +135,6 @@ TEL.:___________________
 
 
     </p>
-{% endif %}
 <p><b>📌 Shartnomani QR orqali ochish:</b></p>
 <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" style="width: 150px; height: 150px; border:1px solid #000;">
 

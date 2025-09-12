@@ -18,7 +18,7 @@ from .forms import ContractForm, AdminContractForm, ContractAdminForm
 from .models import Contract
 
 from contract.models import Contract
-from .utils import link_callback
+from .utils import link_callback, UZBEK_MONTHS
 
 
 def home(request):
@@ -268,6 +268,7 @@ def download_contract_pdf(request, pk):
         'sum_course': sum_course,
         "show_download_links": False,
         "qr_code": qr_base64,
+        "UZBEK_MONTHS":UZBEK_MONTHS
 
     })
 
